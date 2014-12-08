@@ -80,6 +80,6 @@ exec opts@SgdOpts{..} = do
     --print dat
     --putStrLn "hello2"
     let model = T.train L.logLoss dat lambda epochs
-    let predLoss = T.testMany (L.loss L.logLoss ) dat lambda model
+    --let predLoss = T.testMany (L.loss L.logLoss ) dat lambda model
     print model
-    print predLoss
+    --print predLoss

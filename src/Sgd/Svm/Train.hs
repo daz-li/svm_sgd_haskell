@@ -26,9 +26,15 @@ train l x lambda epochs = foldl (go) wParam0 [1..epochs]
   where 
     go wParam _  = trainMany (dloss l) x lambda wParam eta 
 
-    wParam0 = initParam . R.dimSample $ x
+    -- daz-li: memory performance tuning, 
+    dim = R.dimSample x
+    -- dim = 2000
+    wParam0 = initParam dim 
 
+    -- daz-li: memory performance tuning, 
     n = min 1000 . length $ x
+    -- n = 1000
+
     fTrain =  trainMany (dloss l) (take n x) lambda wParam0
     fTest =  testMany (loss l) (take n x) lambda 
     eta0 = determineEta0 (fTest . fTrain) (2, 1, 2)
